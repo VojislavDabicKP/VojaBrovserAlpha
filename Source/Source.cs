@@ -50,8 +50,8 @@ namespace VojaBrowser
             webTab = new WebBrowser() { ScriptErrorsSuppressed = true };
             webTab.Parent = tab;
             webTab.Dock = DockStyle.Fill;
-            webTab.Navigate("https://vojislav.tk/browser.php");
-            textBox1.Text = "https://vojislav.tk/browser.php";
+            webTab.Navigate("https://duckduckgo.com");
+            textBox1.Text = "https://duckduckgo.com";
             webTab.DocumentCompleted += WebTab_DocumentCompled;
             /*
             RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
@@ -82,8 +82,8 @@ namespace VojaBrowser
             webTab = new WebBrowser() { ScriptErrorsSuppressed = true };
             webTab.Parent = tab;
             webTab.Dock = DockStyle.Fill;
-            webTab.Navigate("https://vojislav.tk/browser.php");
-            textBox1.Text = "https://vojislav.tk/browser.php";
+            webTab.Navigate("https://duckduckgo.com");
+            textBox1.Text = "https://duckduckgo.com";
             webTab.DocumentCompleted += WebTab_DocumentCompled;
         }
 
@@ -92,15 +92,45 @@ namespace VojaBrowser
             //string WebPage = textBox1.Text.Trim();
             //webBrowser1.Navigate(WebPage);
             WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
-            web.Navigate(textBox1.Text);
-            
+            if (textBox1.Text.Contains(".local") || textBox1.Text.Contains(".com") || textBox1.Text.Contains("http://") || textBox1.Text.Contains("https://") || textBox1.Text.Contains("www.") || textBox1.Text.Contains(".net") || textBox1.Text.Contains(".tk") || textBox1.Text.Contains(".org"))
+            {
+                web.Navigate(textBox1.Text);
+            }
+            else
+            {
+                this.DoSearch(textBox1.Text);
+            }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             this.tabControl1.TabPages.Remove(this.tabControl1.SelectedTab);
         }
+        private void DoSearch(string keywords)
 
+        {
+
+            string googleSearchString = "http://www.google.co.uk/search?hl=en&q=" + keywords + "&meta=";
+            WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
+            web.Navigate(googleSearchString);
+
+        }
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
+                if (textBox1.Text.Contains("."))
+                {
+                    web.Navigate(textBox1.Text);
+                }
+                else
+                {
+                    this.DoSearch(".NET");
+                }
+            }
+        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
@@ -109,6 +139,12 @@ namespace VojaBrowser
         {
             textBox1.SelectionStart = 0;
             textBox1.SelectionLength = textBox1.Text.Length;
+        }
+
+        private void VojislavButton_Click(object sender, EventArgs e)
+        {
+            WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
+            web.Navigate("vojislav.tk");
         }
     }
 }
