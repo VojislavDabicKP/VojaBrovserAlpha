@@ -11,11 +11,16 @@ using Microsoft.Win32;
 
 namespace VojaBrowser
 {
+    
     public partial class Form1 : Form
     {
+        public string homepage;
         public Form1()
         {
-            
+            if (homepage == null)
+            {
+                homepage = "google.com";
+            }
             InitializeComponent();
         }
         private void WebTab_DocumentCompled(object sender, WebBrowserDocumentCompletedEventArgs e)
@@ -24,9 +29,8 @@ namespace VojaBrowser
             textBox1.Text = web.Url.AbsoluteUri;
             tabControl1.SelectedTab.Text = webTab.DocumentTitle;
         }
+
         
-
-
         /*private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
@@ -40,7 +44,6 @@ namespace VojaBrowser
             WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
             web.Refresh();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             TabPage tab = new TabPage();
@@ -50,8 +53,8 @@ namespace VojaBrowser
             webTab = new WebBrowser() { ScriptErrorsSuppressed = true };
             webTab.Parent = tab;
             webTab.Dock = DockStyle.Fill;
-            webTab.Navigate("https://duckduckgo.com");
-            textBox1.Text = "https://duckduckgo.com";
+            webTab.Navigate(homepage);
+            textBox1.Text = homepage;
             webTab.DocumentCompleted += WebTab_DocumentCompled;
             /*
             RegistryKey key32 = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION", true);
@@ -82,8 +85,8 @@ namespace VojaBrowser
             webTab = new WebBrowser() { ScriptErrorsSuppressed = true };
             webTab.Parent = tab;
             webTab.Dock = DockStyle.Fill;
-            webTab.Navigate("https://duckduckgo.com");
-            textBox1.Text = "https://duckduckgo.com";
+            webTab.Navigate(homepage);
+            textBox1.Text = homepage;
             webTab.DocumentCompleted += WebTab_DocumentCompled;
         }
 
@@ -144,7 +147,19 @@ namespace VojaBrowser
         private void VojislavButton_Click(object sender, EventArgs e)
         {
             WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
-            web.Navigate("vojislav.tk");
+            web.Navigate("Google.com");
+        }
+
+        private void YT_Click(object sender, EventArgs e)
+        {
+            WebBrowser web = tabControl1.SelectedTab.Controls[0] as WebBrowser;
+            web.Navigate("youtube.com");
+        }
+
+        private void homebut_Click(object sender, EventArgs e)
+        {
+            homepage = textBox1.Text;
+            textBox1.Text = "This page has been set to your home page!";
         }
     }
 }
